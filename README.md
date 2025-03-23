@@ -175,7 +175,3 @@ Returns an audio file in base64 encoding.
 - Expand company database with historical data
 - Add visualization components for sentiment trends
 
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
