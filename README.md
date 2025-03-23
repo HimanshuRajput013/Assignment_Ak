@@ -8,17 +8,16 @@ This application allows users to input a company name and receive a structured s
 
 ## Features
 
-- **News Extraction**: Extracts title, summary, and metadata from 10+ news articles related to the input company for this we scrap data from Times of India news website and use BeautifulSoup4 for scrapping data.
-- 
-- **Sentiment Analysis**: Performs sentiment analysis on article content (positive, negative, neutral) using `distilbert-base-uncased-finetuned-sst-2-english`
-- **Comparative Analysis**: Conducts comparative sentiment analysis across multiple articles
-- **Text-to-Speech**: Converts summarized content into Hindi speech
-- **User Interface**: Simple web interface built with Streamlit
-- **API Integration**: Communication between frontend and backend via RESTful APIs
+- **News Extraction**: Extracts the title, summary, and metadata from 10+ news articles related to the input company. News data is scraped from the Times of India website using `BeautifulSoup4`
+- **Sentiment & Summarization Analysis**: Sentiment analysis is performed using the `distilbert-base-uncased-finetuned-sst-2-english` model. Summarization is done with the `sshleifer/distilbart-cnn-12-6 open-source model`.Topic extraction is handled using `KeyBERT`.
+- **Comparative Analysis**: Analyzes sentiment distribution across multiple articles to identify differences in coverage.
+- **Text-to-Speech**: Converts the summarized content into Hindi speech.Translation is done using `GoogleTranslator`.Hindi audio is generated using `gTTS`.
+- **User Interface**: Simple web interface built with `Streamlit`
+- **API Integration**: Communication between frontend and backend via `RESTful APIs`
 
 ## Live Demo
 
-[Access the application on Hugging Face Spaces](https://huggingface.co/spaces/YOUR_USERNAME/news-summarization-tts)
+[Access the application on Hugging Face Spaces](https://huggingface.co/spaces/Himanshu0013/Akaike_News_Scrapper)
 
 ## Project Structure
 
@@ -28,7 +27,6 @@ news-summarization-tts/
 ├── api.py                 # API endpoints
 ├── utils.py               # Utility functions
 ├── requirements.txt       # Dependencies
-├── Dockerfile             # For containerization
 ├── .gitignore             # Git ignore file
 └── README.md              # Project documentation
 ```
@@ -44,8 +42,8 @@ news-summarization-tts/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/news-summarization-tts.git
-   cd news-summarization-tts
+   git clone https://github.com/HimanshuRajput013/Assignment_Ak.git
+   cd Assignment_Ak
    ```
 
 2. Create and activate a virtual environment:
@@ -63,15 +61,29 @@ news-summarization-tts/
 
 1. Start the API server:
    ```bash
-   python api.py
+   uvicorn api:app --host 0.0.0.0 --port 8000
    ```
+   # Accessing the API via Postman
+   1.Choose `POST` as the request type.
 
-2. In a separate terminal, run the Streamlit app:
+   2.Set the API Endpoint `URL` : `http://127.0.0.1:8000/analyze/`
+
+   3.Configure the Request Body:  In Postman, navigate to the `Body` tab and select `raw`. Choose `JSON` format and enter the following request body:
+       ```json
+      {
+        "company": "Tesla"
+      }
+      ``
+      
+   4.Response: Returns a `JSON` object containing extracted news articles and analysis as shown in the example output format.
+
+
+3. In a separate terminal, run the Streamlit app:
    ```bash
    streamlit run app.py
    ```
 
-3. Open your browser and navigate to `http://localhost:8501`
+4. Open your browser and navigate to `http://localhost:8501`
 
 ## Technologies Used
 
@@ -79,36 +91,12 @@ news-summarization-tts/
 
 - **BeautifulSoup (bs4)**: For web scraping news articles
 - **NLTK/Transformers**: For sentiment analysis
-- **Hugging Face**: For text-to-speech models
+- **Hugging Face**: For summariztion models
 - **Streamlit**: For the user interface
-- **FastAPI**: For API development
-- **Pandas**: For data manipulation and analysis
+- **FastAPI**: For API developments
 
-### Models
+**Example API Request**
 
-- **Sentiment Analysis**: DistilBERT fine-tuned on financial news
-- **Text-to-Speech**: AI4Bharat/TTS-Hindi model from Hugging Face
-
-## API Documentation
-
-The application exposes the following API endpoints:
-
-### 1. GET /api/companies
-
-Returns a list of available companies for the dropdown.
-
-**Response:**
-```json
-{
-  "companies": ["Tesla", "Apple", "Microsoft", "Google", "Amazon"]
-}
-```
-
-### 2. POST /api/news
-
-Fetches news articles for a specified company.
-
-**Request:**
 ```json
 {
   "company": "Tesla"
@@ -116,6 +104,7 @@ Fetches news articles for a specified company.
 ```
 
 **Response:**
+
 Returns a JSON object containing extracted news articles and analysis as shown in the example output format.
 
 ### 3. POST /api/tts
@@ -171,40 +160,13 @@ Returns an audio file in base64 encoding.
 }
 ```
 
-## Implementation Details
-
-### News Extraction
-
-- Uses BeautifulSoup to scrape non-JavaScript web links
-- Extracts title, content, publication date, and source
-- Focuses on financial news sources and company press releases
-
-### Sentiment Analysis
-
-- Employs a fine-tuned DistilBERT model for financial sentiment analysis
-- Classifies articles as positive, negative, or neutral
-- Calculates confidence scores for sentiment classification
-
-### Comparative Analysis
-
-- Identifies common and unique topics across articles
-- Analyzes sentiment distribution
-- Highlights contradictions or agreements between sources
-- Provides impact assessment on overall company perception
-
-### Text-to-Speech
-
-- Translates the final English summary to Hindi using a translation model
-- Generates natural-sounding Hindi speech using AI4Bharat's TTS model
-- Provides audio playback in the web interface
-
 ## Assumptions and Limitations
 
 - **News Sources**: The application focuses on accessible, non-JavaScript news sources that can be scraped with BeautifulSoup.
 - **Language**: Primary analysis is done in English before translation to Hindi for TTS.
 - **Company Coverage**: Assumes the input company has at least 10 recent news articles available.
 - **Rate Limiting**: Web scraping respects rate limits to avoid being blocked by news sites.
-- **Processing Time**: Due to the comprehensive analysis, results may take 10-15 seconds to generate.
+- **Processing Time**: Due to the comprehensive analysis, results may take 20-25 seconds to generate.
 
 ## Future Improvements
 
@@ -212,15 +174,7 @@ Returns an audio file in base64 encoding.
 - Implement more sophisticated topic modeling
 - Expand company database with historical data
 - Add visualization components for sentiment trends
-- Improve scraping capabilities to handle JavaScript-rendered content
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## License
 
