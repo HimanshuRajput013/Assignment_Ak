@@ -109,7 +109,7 @@ news-summarization-tts/
 
 ```json
 {
-  "company": "Tesla"
+  "company": "Tata_Motor"
 }
 ```
 
@@ -128,46 +128,75 @@ Returns an audio file in base64 encoding.
 
 ```json
 {
-  "Company": "Tesla",
+  "Company": "Tata Motors",
   "Articles": [
     {
-      "Title": "Tesla's New Model Breaks Sales Records",
-      "Summary": "Tesla's latest EV sees record sales in Q3...",
-      "Sentiment": "Positive",
-      "Topics": ["Electric Vehicles", "Stock Market", "Innovation"]
+      "Title": "Planning to buy car? Maruti, Tata, Kia to get pricier from this date: Details",
+      "Summary": "Kia India has announced a price hike of up to 3% across its entire range, set to take effect from April 1. Tata Motors and Maruti Suzuki have also confirmed price increases on their vehicles. Maruti had previously raised prices on January 1 and again on February 1, making this the third hike in four months.",
+      "Sentiment": {
+        "label": "POSITIVE",
+        "score": 0.9007
+      },
+      "URL": "https://timesofindia.indiatimes.com/auto/cars/planning-to-buy-car-maruti-tata-kia-to-get-pricier-from-this-date-details/articleshow/119190768.cms",
+      "Topics": [
+        "price hike",
+        "price increases",
+        "kia india",
+        "kia",
+        "raised prices"
+      ]
     },
     {
-      "Title": "Regulatory Scrutiny on Tesla's Self-Driving Tech",
-      "Summary": "Regulators have raised concerns over Tesla's self-driving software...",
-      "Sentiment": "Negative",
-      "Topics": ["Regulations", "Autonomous Vehicles"]
+      "Title": "Hyundai Creta, Exter, Verna & more to get expensive from this date: Here's why",
+      "Summary": "Hyundai Motor India Limited has announced a price hike of up to 3%, set to take effect from April 2025. The automaker cited rising input costs, higher commodity prices, and increased operational expenses as key reasons for the revision. Kia India has also announced a 3% hike effective from April 1, while Maruti Suzuki and Tata Motors have also announced their decision to increase prices.",
+      "Sentiment": {
+        "label": "NEGATIVE",
+        "score": 0.7824
+      },
+      "URL": "https://timesofindia.indiatimes.com/auto/cars/hyundai-creta-exter-verna-more-to-get-expensive-from-this-date-heres-why/articleshow/119213772.cms",
+      "Topics": [
+        "price hike",
+        "kia india",
+        "kia",
+        "prices increased",
+        "increase prices"
+      ]
     }
   ],
   "Comparative Sentiment Score": {
     "Sentiment Distribution": {
-      "Positive": 1,
-      "Negative": 1,
-      "Neutral": 0
+      "POSITIVE": 1,
+      "NEGATIVE": 1,
+      "NEUTRAL": 0
     },
     "Coverage Differences": [
       {
-        "Comparison": "Article 1 highlights Tesla's strong sales, while Article 2 discusses regulatory issues.",
-        "Impact": "The first article boosts confidence in Tesla's market growth, while the second raises concerns about future regulatory hurdles."
-      },
-      {
-        "Comparison": "Article 1 is focused on financial success and innovation, whereas Article 2 is about legal challenges and risks.",
-        "Impact": "Investors may react positively to growth news but stay cautious due to regulatory scrutiny."
+        "Comparison": "Planning to buy car? Maruti, Tata, Kia to get pricier from this date: Details vs Hyundai Creta, Exter, Verna & more to get expensive from this date: Here's why",
+        "Impact": "Planning to buy car? Maruti, Tata, Kia to get pricier from this date: Details discusses POSITIVE news, whereas Hyundai Creta, Exter, Verna & more to get expensive from this date: Here's why focuses on NEGATIVE coverage."
       }
     ],
     "Topic Overlap": {
-      "Common Topics": ["Electric Vehicles"],
-      "Unique Topics in Article 1": ["Stock Market", "Innovation"],
-      "Unique Topics in Article 2": ["Regulations", "Autonomous Vehicles"]
+      "Common Topics": [
+        "kia",
+        "price hike",
+        "kia india"
+      ],
+      "Unique Topics per Article": {
+        "Planning to buy car? Maruti, Tata, Kia to get pricier from this date: Details": [
+          "raised prices",
+          "price increases"
+        ],
+        "Hyundai Creta, Exter, Verna & more to get expensive from this date: Here's why": [
+          "increase prices",
+          "prices increased"
+        ]
+      }
     }
   },
-  "Final Sentiment Analysis": "Tesla's latest news coverage is mostly positive. Potential stock growth expected.",
-  "Audio": "[Play Hindi Speech]"
+  "Final Sentiment Analysis": "Tata Motors' latest news coverage is mostly POSITIVE. Potential stock growth expected.",
+  "Hindi_audio": "complete_analysis.mp3"
 }
+
 ```
 
 ## Assumptions and Limitations
