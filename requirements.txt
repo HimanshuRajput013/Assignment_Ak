@@ -1,0 +1,10 @@
+requests
+transformers
+bs4
+keybert
+streamlit
+plotly
+gTTS
+deep_translator
+fastapi
+pydantic
