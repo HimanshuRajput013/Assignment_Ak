@@ -1,7 +1,6 @@
 import streamlit as st
-import requests
-import time
 import plotly.graph_objects as go
+import time
 from utils import extract_articles, comparative_analysis
 
 # Function to create a sentiment gauge
@@ -36,14 +35,28 @@ company_name = st.text_input("Enter a company name to analyze:", "")
 if company_name:
     st.info(f"Fetching latest news articles for: {company_name}...")
 
+    # Progress bar
+    progress_bar = st.progress(0)
+
+    # Start time tracking
+    start_time = time.time()
+
     # Fetch articles
+    st.write("⏳ **Fetching news articles...**")
+    fetch_start = time.time()
     articles = extract_articles(company_name)
-    
+    fetch_time = time.time() - fetch_start
+    progress_bar.progress(25)
+
     if not articles:
         st.error("No articles found. Try another company.")
     else:
         # Perform comparative analysis
+        st.write("🔍 **Performing sentiment analysis...**")
+        analysis_start = time.time()
         analysis_result = comparative_analysis(articles, company_name)
+        analysis_time = time.time() - analysis_start
+        progress_bar.progress(70)
 
         # 📌 Show Raw Output
         st.subheader("📜 Raw Output")
@@ -73,7 +86,9 @@ if company_name:
                 pos_pct = (sentiment_counts.get("POSITIVE", 0) / total) * 100
                 neg_pct = (sentiment_counts.get("NEGATIVE", 0) / total) * 100
                 neu_pct = (sentiment_counts.get("NEUTRAL", 0) / total) * 100
+                gauge_start_time = time.time()
                 render_gauges(pos_pct, neg_pct, neu_pct)
+                gauge_time = time.time() - gauge_start_time
 
         # Display Coverage Differences
         if "Coverage Differences" in analysis_result["Comparative Sentiment Score"]:
@@ -103,6 +118,18 @@ if company_name:
         # Display Final Sentiment Conclusion
         if "Final Sentiment Analysis" in analysis_result:
             st.success(f"**🔹 Final Sentiment Analysis:** {analysis_result['Final Sentiment Analysis']}")
+
+    # Stop time tracking
+    end_time = time.time()
+    total_time = end_time - start_time
+    progress_bar.progress(100)
+
+    # Debugging Information
+    st.subheader("⚙️ **Debugging & Execution Time**")
+    st.write(f"⏳ **News Fetching Time:** {fetch_time:.2f} seconds")
+    st.write(f"🔍 **Sentiment Analysis Time:** {analysis_time:.2f} seconds")
+    st.write(f"🕒 **graph Time:** {gauge_time:.2f} seconds")
+    st.write(f"🕒 **Total Execution Time:** {total_time:.2f} seconds")
 
 # Footer
 st.write("---")
