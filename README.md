@@ -7,7 +7,7 @@ colorFrom: red
 colorTo: yellow
 short_description: News Scrapper
 ---
-
+Hugging_face Link - https://huggingface.co/spaces/Himanshu0013/Akaike_News_Scrapper
 # News Summarization and Text-to-Speech Application
 
 A web-based application that extracts key details from multiple news articles related to a given company, performs sentiment analysis, conducts a comparative analysis, and generates a text-to-speech (TTS) output in Hindi.
