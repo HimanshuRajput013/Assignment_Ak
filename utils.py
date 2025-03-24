@@ -59,7 +59,7 @@ def extract_articles(company: str) -> List[Dict[str, str]]:
     
     soup = BeautifulSoup(response.content, "html.parser")
     articles = []
-    article_divs = soup.select('div.uwU81')[:2]
+    article_divs = soup.select('div.uwU81')[:10]
     
     for div in article_divs:
         a_tag = div.find('a')
