@@ -41,9 +41,10 @@ kw_model = KeyBERT()
 
 
 
-def extract_articles(company: str) -> List[Dict[str, str]]:
+def extract_articles(company: str, num_articles: int = 10) -> List[Dict[str, str]]:
     """Extracts the latest news articles for a given company."""
-    logging.info(f"Starting article extraction for company: {company}")
+    logging.info(f"Starting article extraction for company: {company}, fetching {num_articles} articles")
+    
     headers = {
         'User-Agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                        '(KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
@@ -59,7 +60,7 @@ def extract_articles(company: str) -> List[Dict[str, str]]:
     
     soup = BeautifulSoup(response.content, "html.parser")
     articles = []
-    article_divs = soup.select('div.uwU81')[:10]
+    article_divs = soup.select('div.uwU81')[:num_articles]  # Now uses user-defined number
     
     for div in article_divs:
         a_tag = div.find('a')

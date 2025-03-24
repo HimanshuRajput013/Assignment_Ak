@@ -32,8 +32,10 @@ st.title("📊 News Sentiment Analyzer")
 # User Input: Company Name
 company_name = st.text_input("Enter a company name to analyze:", "")
 
+num_articles = st.slider("Select the number of articles to fetch:", min_value=2, max_value=20, value=3)
+
 if company_name:
-    st.info(f"Fetching latest news articles for: {company_name}...")
+    st.info(f"Fetching {num_articles} latest news articles for: {company_name}...")
 
     # Progress bar
     progress_bar = st.progress(0)
@@ -44,7 +46,7 @@ if company_name:
     # Fetch articles
     st.write("⏳ **Fetching news articles...**")
     fetch_start = time.time()
-    articles = extract_articles(company_name)
+    articles = extract_articles(company_name, num_articles=num_articles)
     fetch_time = time.time() - fetch_start
     progress_bar.progress(25)
 
@@ -88,7 +90,7 @@ if company_name:
                 neu_pct = (sentiment_counts.get("NEUTRAL", 0) / total) * 100
                 gauge_start_time = time.time()
                 render_gauges(pos_pct, neg_pct, neu_pct)
-                gauge_time = time.time() - gauge_start_time
+                
 
         # Display Coverage Differences
         if "Coverage Differences" in analysis_result["Comparative Sentiment Score"]:
@@ -128,9 +130,4 @@ if company_name:
     st.subheader("⚙️ **Debugging & Execution Time**")
     st.write(f"⏳ **News Fetching Time:** {fetch_time:.2f} seconds")
     st.write(f"🔍 **Sentiment Analysis Time:** {analysis_time:.2f} seconds")
-    st.write(f"🕒 **graph Time:** {gauge_time:.2f} seconds")
     st.write(f"🕒 **Total Execution Time:** {total_time:.2f} seconds")
-
-# Footer
-st.write("---")
-st.caption("Developed with ❤️ using Streamlit.")
